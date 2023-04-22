@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:openhours/Pages/Login.dart';
+import 'package:openhours/Pages/Signup.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -63,7 +64,12 @@ class _LandingPageState extends State<LandingPage> {
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     side: const BorderSide(width: 1.0, color: Colors.white)),
-                onPressed: () {}, // Navigate to Sign up Page
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignupPage()));
+                }, // Navigate to Sign up Page
                 child: const Text('Sign up',
                     style: TextStyle(color: Colors.white)),
               ),
