@@ -21,6 +21,7 @@ class _PurpTextFieldState extends State<PurpTextField> {
       height: height * 0.8,
       width: width * 0.06,
       child: TextField(
+        textAlignVertical: TextAlignVertical(y: 1.0),
         obscureText: widget.ispassword ? _isObscure : false,
         decoration: InputDecoration(
           suffixIconColor: MaterialStateColor.resolveWith((states) =>

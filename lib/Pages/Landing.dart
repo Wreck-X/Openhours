@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:openhours/Pages/Login.dart';
 import 'package:openhours/Pages/Signup.dart';
+import 'package:openhours/Pages/RestaurantDetails.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
