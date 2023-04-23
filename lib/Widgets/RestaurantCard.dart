@@ -20,16 +20,6 @@ class _RestaurantCardState extends State<RestaurantCard> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Padding(
-<<<<<<< HEAD
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          height: height * 0.22,
-          width: width,
-          child: Placeholder(),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20)),
-        ));
-=======
       padding: const EdgeInsets.all(10.0),
       child: Card(
         shape: RoundedRectangleBorder(
@@ -60,18 +50,15 @@ class _RestaurantCardState extends State<RestaurantCard> {
         ),
       ),
     );
->>>>>>> b756859 (changes)
   }
 
   Widget buildImage(String urlImage, int index) => Container(
-    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(20.0),
-      child: Image.network(
-        urlImage,
-      ),
-    ),
-  );
-
-
+        margin: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Image.network(
+            urlImage,
+          ),
+        ),
+      );
 }
