@@ -18,6 +18,8 @@ class _RestaurantCardState extends State<RestaurantCard> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(13.0),
       child: Card(
