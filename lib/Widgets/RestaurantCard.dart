@@ -11,21 +11,16 @@ class RestaurantCard extends StatefulWidget {
 class _RestaurantCardState extends State<RestaurantCard> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40.0),
-        ),
-        elevation: 10,
+        padding: const EdgeInsets.all(10.0),
         child: Container(
-          width: 300,
-          height: 190,
-          child: Center(
-            child: Text('This is a card'),
-          ),
-        ),
-      ),
-    );
+          height: height * 0.22,
+          width: width,
+          child: Placeholder(),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+        ));
   }
 }

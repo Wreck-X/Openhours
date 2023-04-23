@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:openhours/Pages/RestaurantDetails.dart';
 import 'package:openhours/Pages/Restaurants.dart';
 import 'package:openhours/Widgets/Textfields.dart';
 
@@ -60,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               height: height * 0.06,
               child: PurpTextField('Password', true),
             ),
-            SizedBox(height: 60),
+            const SizedBox(height: 60),
             SizedBox(
               width: width * 0.6,
               height: height * 0.06,
@@ -68,9 +69,10 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Restaurants()),
+                    MaterialPageRoute(
+                        builder: (context) => const Restaurants()),
                   );
-                  },
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: const Color.fromARGB(255, 199, 152, 255),
