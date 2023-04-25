@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  page_indicator: ^0.4.0
+  dots_indicator: ^2.0.0
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
   flutter_rating_bar: ^4.0.0
