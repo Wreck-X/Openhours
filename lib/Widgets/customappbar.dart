@@ -19,6 +19,7 @@ class _PurpAppBarState extends State<PurpAppBar> {
           cursorColor: Colors.white,
           cursorHeight: 20,
           decoration: InputDecoration(
+            hintText: "Enter restaurant name",
             suffixIconColor: MaterialStateColor.resolveWith((states) =>
                 states.contains(MaterialState.focused)
                     ? Colors.white
