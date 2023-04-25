@@ -7,14 +7,16 @@ class RestaurantCard extends StatefulWidget {
   String title;
   double rating;
   List images;
-  RestaurantCard(this.title, this.rating, this.images, {Key? key}) : super(key: key);
+  List food;
+  List drinks;
+  RestaurantCard(this.title, this.rating, this.images, this.food, this.drinks, {Key? key})
+      : super(key: key);
 
   @override
   State<RestaurantCard> createState() => _RestaurantCardState();
 }
 
 class _RestaurantCardState extends State<RestaurantCard> {
-
   int _currentIndex = 0;
 
   @override
@@ -28,7 +30,8 @@ class _RestaurantCardState extends State<RestaurantCard> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RestaurantDetails(widget.images[0], [], [])));
+                  builder: (context) =>
+                      RestaurantDetails(widget.images[0], widget.food, widget.drinks)));
         },
         child: Card(
           color: Color(0xffE01313),

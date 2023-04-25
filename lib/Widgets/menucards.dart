@@ -17,14 +17,7 @@ class _MenucardsState extends State<Menucards> {
     return SizedBox(
       height: height * 0.23,
       width: width * 0.43,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-            backgroundColor: Color(0xFFC7F5FF).withOpacity(0.24),
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
-
-        onPressed: () {}, //signup
+      child: Container( //signup
         child: Text(widget.prompt, style: TextStyle(color: Colors.white)),
       ),
     );

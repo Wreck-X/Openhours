@@ -3,7 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class PurpAppBar extends StatefulWidget {
-  const PurpAppBar({super.key});
+  String hint;
+  PurpAppBar(this.hint, {super.key});
 
   @override
   State<PurpAppBar> createState() => _PurpAppBarState();
@@ -19,7 +20,7 @@ class _PurpAppBarState extends State<PurpAppBar> {
           cursorColor: Colors.white,
           cursorHeight: 20,
           decoration: InputDecoration(
-            hintText: "Enter restaurant name",
+            hintText: widget.hint,
             suffixIconColor: MaterialStateColor.resolveWith((states) =>
                 states.contains(MaterialState.focused)
                     ? Colors.white

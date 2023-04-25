@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:openhours/Widgets/customappbar.dart';
 import '../Widgets/menucards.dart';
+import 'Foodcard.dart';
+import 'Drinkscard.dart';
 
 class RestaurantDetails extends StatefulWidget {
   String image;
   List food;
   List drinks;
-  RestaurantDetails(this.image, this.drinks, this.food, {Key? key}) : super(key: key);
+  RestaurantDetails(this.image, this.food, this.drinks, {Key? key})
+      : super(key: key);
 
   @override
   State<RestaurantDetails> createState() => _RestaurantDetailsState();
@@ -34,7 +37,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
         ),
         child: Column(
           children: [
-            PurpAppBar(),
+            PurpAppBar("Enter restaurant name"),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -70,10 +73,28 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Padding(
                           padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                          child: Menucards('Food')),
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Foodcard(widget.food)),
+                                );
+                              },
+                              child: Menucards('Food'))),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(8, 0, 16, 0),
-                          child: Menucards('Drinks'))
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Drinkscard(widget.drinks)),
+                                );
+                              },
+                              child: Menucards('Drinks')))
                     ])
                   ],
                 ),
