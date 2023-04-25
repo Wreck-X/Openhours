@@ -3,7 +3,10 @@ import 'package:openhours/Widgets/customappbar.dart';
 import '../Widgets/menucards.dart';
 
 class RestaurantDetails extends StatefulWidget {
-  const RestaurantDetails({Key? key}) : super(key: key);
+  String image;
+  List food;
+  List drinks;
+  RestaurantDetails(this.image, this.drinks, this.food, {Key? key}) : super(key: key);
 
   @override
   State<RestaurantDetails> createState() => _RestaurantDetailsState();
@@ -45,8 +48,8 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                         borderRadius: BorderRadius.circular(20),
                         child: Align(
                           alignment: Alignment.topCenter,
-                          child: Image.asset(
-                            'Images/casablanca.jpg',
+                          child: Image.network(
+                            widget.image,
                           ),
                         ),
                       ),

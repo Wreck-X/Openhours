@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:openhours/Pages/RestaurantDetails.dart';
-import 'package:page_indicator/page_indicator.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 
 class RestaurantCard extends StatefulWidget {
-  String entry;
-  RestaurantCard(this.entry, {Key? key}) : super(key: key);
+  String title;
+  double rating;
+  List images;
+  RestaurantCard(this.title, this.rating, this.images, {Key? key}) : super(key: key);
 
   @override
   State<RestaurantCard> createState() => _RestaurantCardState();
 }
 
 class _RestaurantCardState extends State<RestaurantCard> {
-  final urlImages = [    'https://lh3.googleusercontent.com/p/AF1QipNHr_KPpZ0orf3tXeuOjtChdiFhlgF66u_nUKDD=s1360-w1360-h1020',    'https://img.restaurantguru.com/cfd6-Casablanca-Vallikavu-interior.jpg',    'https://10619-2.s.cdn12.com/rests/small/w285/102_505848815.jpg'  ];
 
   int _currentIndex = 0;
 
@@ -26,9 +26,9 @@ class _RestaurantCardState extends State<RestaurantCard> {
       child: GestureDetector(
         onTap: () {
           Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RestaurantDetails()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RestaurantDetails(widget.images[0], [], [])));
         },
         child: Card(
           color: Color(0xffE01313),
@@ -41,7 +41,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 3),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: Column(
                     children: [
                       SizedBox(
@@ -53,16 +53,16 @@ class _RestaurantCardState extends State<RestaurantCard> {
                               _currentIndex = index;
                             });
                           },
-                          itemCount: urlImages.length,
+                          itemCount: widget.images.length,
                           itemBuilder: (context, index) {
-                            final urlImage = urlImages[index];
+                            final urlImage = widget.images[index];
                             return buildImage(urlImage, index);
                           },
                         ),
                       ),
                       SizedBox(height: 8),
                       DotsIndicator(
-                        dotsCount: urlImages.length,
+                        dotsCount: widget.images.length,
                         position: _currentIndex.toDouble(),
                         decorator: DotsDecorator(
                           color: Colors.grey[300]!,
@@ -78,7 +78,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(22, 0, 0, 0),
                   child: Text(
-                    'Casablanca',
+                    widget.title,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -89,6 +89,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(17, 0, 0, 8),
                   child: RatingBar.builder(
+                    initialRating: widget.rating,
                     minRating: 1,
                     direction: Axis.horizontal,
                     itemCount: 5,
@@ -112,6 +113,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
   }
 
   Widget buildImage(String urlImage, int index) => Container(
+        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
         margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20.0),
