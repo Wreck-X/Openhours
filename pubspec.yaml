@@ -35,6 +35,7 @@ dependencies:
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
   flutter_rating_bar: ^4.0.0
+  slide_to_act: ^2.0.1
 
 
 dev_dependencies:
@@ -74,12 +75,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Recursive
-      fonts:
-        - asset: fonts/Recursive-Regular.ttf
-        - asset: fonts/Recursive-Bold.ttf
-          weight: 700
+  # fonts:
+  #   - family: Recursive
+  #     fonts:
+  #       - asset: fonts/Recursive-Regular.ttf
+  #       - asset: fonts/Recursive-Bold.ttf
+  #         weight: 700
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

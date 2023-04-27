@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:openhours/Pages/RestaurantDetails.dart';
 import 'package:openhours/Pages/Restaurants.dart';
+import 'package:openhours/Pages/Owner.dart';
 import 'package:openhours/Widgets/Textfields.dart';
 
 class LoginPage extends StatefulWidget {
@@ -70,7 +71,10 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const Restaurants()),
+                        builder: (context) => Owner(
+                              "Casablanca",
+                              "https://lh3.googleusercontent.com/p/AF1QipNHr_KPpZ0orf3tXeuOjtChdiFhlgF66u_nUKDD=s1360-w1360-h1020",
+                            )),
                   );
                 },
                 style: ElevatedButton.styleFrom(
