@@ -3,18 +3,20 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:openhours/Pages/RestaurantDetails.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 
-class RestaurantCard extends StatefulWidget {
-  String title;
-  double rating;
-  List images;
-  List food;
-  List drinks;
-  RestaurantCard(this.title, this.rating, this.images, this.food, this.drinks, {Key? key})
-      : super(key: key);
+  class RestaurantCard extends StatefulWidget {
+    String title;
+    double rating;
+    bool color_choice;
+    List images;
+    List food;
+    List drinks;
+    RestaurantCard(this.title, this.rating, this.color_choice, this.images, this.food, this.drinks,
+        {Key? key})
+        : super(key: key);
 
-  @override
-  State<RestaurantCard> createState() => _RestaurantCardState();
-}
+    @override
+    State<RestaurantCard> createState() => _RestaurantCardState();
+  }
 
 class _RestaurantCardState extends State<RestaurantCard> {
   int _currentIndex = 0;
@@ -30,11 +32,11 @@ class _RestaurantCardState extends State<RestaurantCard> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      RestaurantDetails(widget.images[0], widget.food, widget.drinks)));
+                  builder: (context) => RestaurantDetails(
+                      widget.images[0], widget.food, widget.drinks)));
         },
         child: Card(
-          color: Color(0xffE01313),
+          color: widget.color_choice ? Color(0xff13E07B):Color(0xffE01313),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40.0),
           ),

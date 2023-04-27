@@ -4,15 +4,14 @@ import 'package:slide_to_act/slide_to_act.dart';
 class Owner extends StatefulWidget {
   String? title;
   String? image;
+  bool status = true;
   Owner(this.title, this.image, {Key? key}) : super(key: key);
-
+  
   @override
   State<Owner> createState() => _OwnerState();
 }
 
 class _OwnerState extends State<Owner> {
-  bool status = true; // Define status as an instance variable
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -84,7 +83,7 @@ class _OwnerState extends State<Owner> {
             Container(
               height: 60,
               width: 320,
-              child: getSlideActionWidget(status),
+              child: getSlideActionWidget(widget.status),
             ),
           ],
         ),
@@ -95,7 +94,7 @@ class _OwnerState extends State<Owner> {
   Widget getSlideActionWidget(bool status) {
     return status
         ? SlideAction(
-          animationDuration: Duration(milliseconds: 400),
+            animationDuration: Duration(milliseconds: 400),
             key: ValueKey("slide_action_open"), // add key
             submittedIcon: Icon(Icons.lock_open),
             sliderButtonIcon: Icon(Icons.lock_outline),
@@ -107,8 +106,8 @@ class _OwnerState extends State<Owner> {
             innerColor: Colors.white54,
             onSubmit: () async {
               setState(() {
-                this.status = false;
-                 // Update the status variable
+                widget.status = false;
+                // Update the status variable
               });
             },
           )
@@ -121,15 +120,14 @@ class _OwnerState extends State<Owner> {
             elevation: 4,
             text: "Slide to Close",
             textStyle: TextStyle(fontSize: 18, color: Colors.white),
-            outerColor: Color.fromARGB(255, 38, 227, 38),	
-            innerColor: Colors.white54,	
-            onSubmit: () async {	
-              setState(() {	
-                this.status = true; // Update the status variable	
-              });	
+            outerColor: Color.fromARGB(255, 38, 227, 38),
+            innerColor: Colors.white54,
+            onSubmit: () async {
+              setState(() {
+                widget.status = true; // Update the status variable
+              });
               await Future.delayed(Duration(seconds: 3));
-            },	
-          );	
-  }	
+            },
+          );
+  }
 }
-

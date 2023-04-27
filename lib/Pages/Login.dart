@@ -71,10 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Owner(
-                              "Casablanca",
-                              "https://lh3.googleusercontent.com/p/AF1QipNHr_KPpZ0orf3tXeuOjtChdiFhlgF66u_nUKDD=s1360-w1360-h1020",
-                            )),
+                        builder: (context) => Restaurants()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
