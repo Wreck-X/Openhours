@@ -71,21 +71,17 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            color: Colors.black38.withOpacity(0.6),
-                            spreadRadius: 8,
-                            blurRadius: 10,
-                            offset: Offset(0, 3),
-                          ),
-                        ]),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Image.network(
-                              widget.image,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Card(
+                          elevation: 16.0,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Image.network(
+                                widget.image,
+                              ),
                             ),
                           ),
                         ),
