@@ -3,6 +3,7 @@ import 'package:openhours/Widgets/customappbar.dart';
 import '../Widgets/menucards.dart';
 import 'Foodcard.dart';
 import 'Drinkscard.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 class RestaurantDetails extends StatefulWidget {
   String image;
@@ -16,22 +17,42 @@ class RestaurantDetails extends StatefulWidget {
 }
 
 class _RestaurantDetailsState extends State<RestaurantDetails> {
+
+  late PaletteGenerator _paletteGenerator;
+  bool _isLoading = true;
+
+    @override
+  void initState() {
+    super.initState();
+    _generatePalette();
+  }
+
+  Future<void> _generatePalette() async {
+    final provider = NetworkImage(widget.image);
+    _paletteGenerator = await PaletteGenerator.fromImageProvider(provider);
+    setState(() {
+      _isLoading = false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    final appbarheight = AppBar().preferredSize.height;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+    final primaryColor = _isLoading ? Colors.transparent : _paletteGenerator.vibrantColor?.color;
+    final secondaryColor = _isLoading ? Colors.transparent : _paletteGenerator.lightMutedColor?.color;
+
     return Scaffold(
       body: Container(
         height: height,
         width: width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: <Color>[
-              Color.fromARGB(255, 199, 152, 255),
-              Color.fromARGB(255, 140, 173, 255),
+              primaryColor!,
+              secondaryColor!,
             ],
           ),
         ),

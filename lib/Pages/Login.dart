@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:openhours/Pages/RestaurantDetails.dart';
 import 'package:openhours/Pages/Restaurants.dart';
-import 'package:openhours/Pages/Owner.dart';
+import 'package:openhours/Pages/ProposedRestaurant.dart';
 import 'package:openhours/Widgets/Textfields.dart';
 
 class LoginPage extends StatefulWidget {
@@ -71,8 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Restaurants()),
-                  );
+                        builder: (context) => Restaurants()));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,

@@ -1,57 +1,93 @@
-// how to implement owner in Restaurants....but try to optimize it
 import 'package:flutter/material.dart';
-import 'package:openhours/Widgets/RestaurantCard.dart';
-import '../Widgets/customappbar.dart';
-import '../Pages/Owner.dart';
+import 'package:palette_generator/palette_generator.dart';
 
-class Restaurants extends StatefulWidget {
-  const Restaurants({super.key});
+class Owner extends StatefulWidget {
+  final String? title;
+  final String? image;
+  const Owner(this.title, this.image, {Key? key}) : super(key: key);
 
   @override
-  State<Restaurants> createState() => _RestaurantsState();
+  State<Owner> createState() => _OwnerState();
 }
 
-class _RestaurantsState extends State<Restaurants> {
+class _OwnerState extends State<Owner> {
+  late PaletteGenerator _paletteGenerator;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _generatePalette();
+  }
+
+  Future<void> _generatePalette() async {
+    final provider = NetworkImage(widget.image!);
+    _paletteGenerator = await PaletteGenerator.fromImageProvider(provider);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    Owner Casablanca = Owner("Casablanca",
-        'https://lh3.googleusercontent.com/p/AF1QipNHr_KPpZ0orf3tXeuOjtChdiFhlgF66u_nUKDD=s1360-w1360-h1020');
+
+    final primaryColor = _isLoading ? Colors.transparent : _paletteGenerator.vibrantColor?.color;
+    final secondaryColor = _isLoading ? Colors.transparent : _paletteGenerator.lightMutedColor?.color;
+
     return Scaffold(
-        body: Container(
-      height: height,
-      width: width,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            Color.fromARGB(255, 199, 152, 255),
-            Color.fromARGB(255, 140, 173, 255),
+      body: Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[
+              primaryColor!,
+              secondaryColor!,
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 45, 0, 30),
+              child: Text(
+                widget.title!,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                  fontFamily: "Roboto Mono",
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(width: 2, color: Colors.white),
+                    left: BorderSide(width: 2, color: Colors.white),
+                    right: BorderSide(width: 2, color: Colors.white),
+                    bottom: BorderSide(width: 2, color: Colors.white),
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.network(
+                      widget.image!,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
-      child: SingleChildScrollView(
-        child: Column(children: [
-          PurpAppBar("Enter restaurant name"),
-          RestaurantCard("Casablanca", 3.4, Casablanca.status, [
-            'https://lh3.googleusercontent.com/p/AF1QipNHr_KPpZ0orf3tXeuOjtChdiFhlgF66u_nUKDD=s1360-w1360-h1020',
-            'https://img.restaurantguru.com/cfd6-Casablanca-Vallikavu-interior.jpg',
-            'https://10619-2.s.cdn12.com/rests/small/w285/102_505848815.jpg',
-          ], [
-            'alfam',
-            'shawai',
-            'Shawarma',
-            'Kizhi Biryani'
-          ], [
-            'Orange Juice',
-            'Lemon Juice',
-            'Lassi'
-          ]),
-          
-        ]),
-      ),
-    ));
+    );
   }
 }
