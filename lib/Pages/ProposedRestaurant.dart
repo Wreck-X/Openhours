@@ -33,8 +33,11 @@ class _OwnerState extends State<Owner> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    final primaryColor = _isLoading ? Colors.transparent : _paletteGenerator.vibrantColor?.color;
-    final secondaryColor = _isLoading ? Colors.transparent : _paletteGenerator.lightMutedColor?.color;
+    final primaryColor =
+        _isLoading ? Colors.transparent : _paletteGenerator.vibrantColor?.color;
+    final secondaryColor = _isLoading
+        ? Colors.transparent
+        : _paletteGenerator.lightMutedColor?.color;
 
     return Scaffold(
       body: Container(
@@ -67,6 +70,14 @@ class _OwnerState extends State<Owner> {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black38.withOpacity(0.6),
+                      spreadRadius: 8,
+                      blurRadius: 10,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
                   border: Border(
                     top: BorderSide(width: 2, color: Colors.white),
                     left: BorderSide(width: 2, color: Colors.white),

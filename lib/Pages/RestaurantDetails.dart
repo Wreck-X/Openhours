@@ -17,11 +17,10 @@ class RestaurantDetails extends StatefulWidget {
 }
 
 class _RestaurantDetailsState extends State<RestaurantDetails> {
-
   late PaletteGenerator _paletteGenerator;
   bool _isLoading = true;
 
-    @override
+  @override
   void initState() {
     super.initState();
     _generatePalette();
@@ -34,13 +33,17 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
       _isLoading = false;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    final primaryColor = _isLoading ? Colors.transparent : _paletteGenerator.vibrantColor?.color;
-    final secondaryColor = _isLoading ? Colors.transparent : _paletteGenerator.lightMutedColor?.color;
+    final primaryColor =
+        _isLoading ? Colors.transparent : _paletteGenerator.vibrantColor?.color;
+    final secondaryColor = _isLoading
+        ? Colors.transparent
+        : _paletteGenerator.lightMutedColor?.color;
 
     return Scaffold(
       body: Container(
@@ -68,12 +71,22 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Image.network(
-                            widget.image,
+                      child: Container(
+                        decoration: BoxDecoration(boxShadow: [
+                          BoxShadow(
+                            color: Colors.black38.withOpacity(0.6),
+                            spreadRadius: 8,
+                            blurRadius: 10,
+                            offset: Offset(0, 3),
+                          ),
+                        ]),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Image.network(
+                              widget.image,
+                            ),
                           ),
                         ),
                       ),
