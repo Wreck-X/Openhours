@@ -41,7 +41,7 @@ class _PurpTextFieldState extends State<PurpTextField> {
           filled: true,
           fillColor: const Color.fromARGB(255, 196, 185, 252),
           hintText: widget.entry,
-          hintStyle: const TextStyle(color: Colors.white),
+          hintStyle: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono'),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
             borderRadius: BorderRadius.all(Radius.circular(6)),

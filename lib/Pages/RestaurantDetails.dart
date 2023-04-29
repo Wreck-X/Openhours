@@ -96,7 +96,7 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                       child: const Align(
                         child: Text(
                           'Menu',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                          style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'Recursive'),
                         ),
                       ),
                     ),

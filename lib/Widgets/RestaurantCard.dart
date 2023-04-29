@@ -3,20 +3,21 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:openhours/Pages/RestaurantDetails.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 
-  class RestaurantCard extends StatefulWidget {
-    String title;
-    double rating;
-    bool color_choice;
-    List images;
-    List food;
-    List drinks;
-    RestaurantCard(this.title, this.rating, this.color_choice, this.images, this.food, this.drinks,
-        {Key? key})
-        : super(key: key);
+class RestaurantCard extends StatefulWidget {
+  String title;
+  double rating;
+  bool color_choice;
+  List images;
+  List food;
+  List drinks;
+  RestaurantCard(this.title, this.rating, this.color_choice, this.images,
+      this.food, this.drinks,
+      {Key? key})
+      : super(key: key);
 
-    @override
-    State<RestaurantCard> createState() => _RestaurantCardState();
-  }
+  @override
+  State<RestaurantCard> createState() => _RestaurantCardState();
+}
 
 class _RestaurantCardState extends State<RestaurantCard> {
   int _currentIndex = 0;
@@ -36,94 +37,83 @@ class _RestaurantCardState extends State<RestaurantCard> {
                       widget.images[0], widget.food, widget.drinks)));
         },
         child: Card(
-          color: widget.color_choice ? Color(0xff13E07B):Color(0xffE01313),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40.0),
           ),
-          elevation: 16.0,
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 150,
-                        width: 400,
-                        child: PageView.builder(
-                          onPageChanged: (index) {
-                            setState(() {
-                              _currentIndex = index;
-                            });
-                          },
-                          itemCount: widget.images.length,
-                          itemBuilder: (context, index) {
-                            final urlImage = widget.images[index];
-                            return buildImage(urlImage, index);
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      DotsIndicator(
-                        dotsCount: widget.images.length,
-                        position: _currentIndex.toDouble(),
-                        decorator: DotsDecorator(
-                          color: Colors.grey[300]!,
-                          activeColor: Colors.white,
-                          spacing: EdgeInsets.all(3),
-                          activeSize: Size(10, 10),
-                          size: Size(6, 6),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(22, 0, 0, 0),
+          elevation: 12.0,
+          child: Stack(
+            children: [
+              Container(
+                height: 250,
+                width: 180,
+                child: buildImage(widget.images[0]),
+              ),
+              Positioned(
+                bottom: 50,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     widget.title,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 15,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    textAlign: TextAlign.left,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(17, 0, 0, 8),
-                  child: RatingBar.builder(
-                    initialRating: widget.rating,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    itemCount: 5,
-                    itemSize: 22.5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
+              ),
+              Positioned(
+                bottom: 18,
+                left: 7,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Text(
+                        widget.color_choice ? "Open" : "Closed",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800),
+                      ),
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
+                    decoration: BoxDecoration(
+                        color: widget.color_choice ? Colors.green : Colors.red),
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+              Positioned(
+                  bottom: 20,
+                  left: 120,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.transparent),
+                      child: Row(children: [
+                        Icon(Icons.star, color: Color.fromRGBO(255, 215, 0, 1.0),),
+                        Text(
+                          widget.rating.toString(),
+                          style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w900),
+                        ),
+                      ]),
+                    ),
+                  ))
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget buildImage(String urlImage, int index) => Container(
-        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-        margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+  Widget buildImage(String urlImage) => Container(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20.0),
           child: Image.network(
             urlImage,
+            fit: BoxFit.cover,
           ),
         ),
       );

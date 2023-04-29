@@ -18,7 +18,7 @@ class _MenucardsState extends State<Menucards> {
       height: height * 0.23,
       width: width * 0.43,
       child: Container( //signup
-        child: Text(widget.prompt, style: TextStyle(color: Colors.white)),
+        child: Text(widget.prompt, style: TextStyle(color: Colors.white, fontFamily: 'Recursive')),
       ),
     );
   }

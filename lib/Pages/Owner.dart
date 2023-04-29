@@ -39,7 +39,7 @@ class _OwnerState extends State<Owner> {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 24,
-                  fontFamily: "Roboto Mono",
+                  fontFamily: "RobotoMono",
                 ),
               ),
             ),
