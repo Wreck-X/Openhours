@@ -22,14 +22,7 @@ class _LandingPageState extends State<LandingPage> {
         height: height,
         width: width,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[
-              Color.fromARGB(255, 199, 152, 255),
-              Color.fromARGB(255, 140, 173, 255),
-            ],
-          ),
+          color: Color(0xffF8FAF9),
         ),
         child: Column(
           children: [
@@ -42,8 +35,7 @@ class _LandingPageState extends State<LandingPage> {
               height: height * 0.06,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Color.fromARGB(255, 199, 152, 255),
+                  backgroundColor: Color(0xff209653),
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -53,7 +45,8 @@ class _LandingPageState extends State<LandingPage> {
                 },
                 child: const Text('Login',
                     style: TextStyle(
-                        color: Colors.black)), //Navigate to Login page),
+                        color: Colors.white,
+                        fontSize: 20)), //Navigate to Login page),
               ),
             ),
             const SizedBox(height: 10),
@@ -64,7 +57,8 @@ class _LandingPageState extends State<LandingPage> {
                 style: TextButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
-                    side: const BorderSide(width: 1.0, color: Colors.white)),
+                    side:
+                        const BorderSide(width: 1.0, color: Color(0xff209653))),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -72,7 +66,7 @@ class _LandingPageState extends State<LandingPage> {
                           builder: (context) => const SignupPage()));
                 }, // Navigate to Sign up Page
                 child: const Text('Sign up',
-                    style: TextStyle(color: Colors.white)),
+                    style: TextStyle(color: Color(0xff209653), fontSize: 20)),
               ),
             ),
           ],

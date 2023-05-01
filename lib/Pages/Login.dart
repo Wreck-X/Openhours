@@ -24,14 +24,7 @@ class _LoginPageState extends State<LoginPage> {
         height: height,
         width: width,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[
-              Color.fromARGB(255, 199, 152, 255),
-              Color.fromARGB(255, 140, 173, 255),
-            ],
-          ),
+          color: Color(0xffF8FAF9),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -40,14 +33,20 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.center,
               child: Text(
                 'Login',
-                style: TextStyle(fontSize: 31, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 31,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const Align(
               alignment: Alignment.center,
               child: Text(
                 'Welcome back!',
-                style: TextStyle(fontSize: 30, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 20),
@@ -68,18 +67,16 @@ class _LoginPageState extends State<LoginPage> {
               height: height * 0.06,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Restaurants()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Restaurants()));
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: const Color.fromARGB(255, 199, 152, 255),
+                  backgroundColor: Color(0xff209653),
                 ),
                 child: const Text(
                   'Login',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: "Inter", fontSize: 20),
                 ),
               ),
             ),

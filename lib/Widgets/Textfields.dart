@@ -39,11 +39,12 @@ class _PurpTextFieldState extends State<PurpTextField> {
                       _isObscure ? Icons.visibility_off : Icons.visibility))
               : null,
           filled: true,
-          fillColor: const Color.fromARGB(255, 196, 185, 252),
+          fillColor: Color(0xffE8ECEB),
           hintText: widget.entry,
-          hintStyle: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono'),
+          hintStyle: const TextStyle(
+              color: Color(0xffB3B3B3), fontFamily: 'RobotoMono'),
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: Colors.transparent),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           focusedBorder: const OutlineInputBorder(
