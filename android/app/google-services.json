@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "173258707201",
+    "project_id": "openhours-61882",
+    "storage_bucket": "openhours-61882.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173258707201:android:4173c377ea1907a1bacb00",
+        "android_client_info": {
+          "package_name": "com.example.openhours"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "173258707201-aaipm7tvfs4ndu49bp1oqrbq84vkvjdo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.openhours",
+            "certificate_hash": "7095304ed5836b68369453659de28cef6991032f"
+          }
+        },
+        {
+          "client_id": "173258707201-1ek6s450nd89rga6umnkkmm5bs16d0m1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiJKV5ZbSlVZG0sljr9cVdTDFhi2EPyP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "173258707201-1ek6s450nd89rga6umnkkmm5bs16d0m1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

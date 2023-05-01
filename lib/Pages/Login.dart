@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -14,6 +16,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var func = (value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+    return null;
+  };
+  TextEditingController _emailcontroller = TextEditingController();
+  TextEditingController _passwordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -53,13 +63,13 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               width: width * 0.8,
               height: height * 0.06,
-              child: PurpTextField('Username', false),
+              child: PurpTextField('Email', false, _emailcontroller, func),
             ),
             const SizedBox(height: 10),
             SizedBox(
               width: width * 0.8,
               height: height * 0.06,
-              child: PurpTextField('Password', true),
+              child: PurpTextField('Password', true, _passwordcontroller, func),
             ),
             const SizedBox(height: 60),
             SizedBox(
@@ -67,8 +77,16 @@ class _LoginPageState extends State<LoginPage> {
               height: height * 0.06,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Restaurants()));
+                  FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: _emailcontroller.text,
+                          password: _passwordcontroller.text)
+                      .then((value) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Restaurants()));
+                  }).onError((error, stackTrace) {
+                    print('Error ${error.toString()}');
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff209653),

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:openhours/Pages/Login.dart';
 import 'package:openhours/Widgets/Textfields.dart';
 
 class SignupPage extends StatefulWidget {
@@ -11,6 +13,15 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  var func = (value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+    return null;
+  };
+  TextEditingController _usernamecontroller = TextEditingController();
+  TextEditingController _emailcontroller = TextEditingController();
+  TextEditingController _passwordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -31,9 +42,9 @@ class _SignupPageState extends State<SignupPage> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
               )),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 2, 0, 30),
-            child: const Align(
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 30),
+            child: Align(
               alignment: Alignment.center,
               child: Text(
                 'Create account',
@@ -44,28 +55,18 @@ class _SignupPageState extends State<SignupPage> {
               ),
             ),
           ),
+          const SizedBox(height: 10),
           SizedBox(
             width: width * 0.8,
             height: height * 0.06,
-            child: PurpTextField('Username', false),
+            child:
+                PurpTextField('Email address', false, _emailcontroller, func),
           ),
           const SizedBox(height: 10),
           SizedBox(
             width: width * 0.8,
             height: height * 0.06,
-            child: PurpTextField('Email address', false),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: width * 0.8,
-            height: height * 0.06,
-            child: PurpTextField('Password', true),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: width * 0.8,
-            height: height * 0.06,
-            child: PurpTextField('Confirm Password', true),
+            child: PurpTextField('Password', true, _passwordcontroller, func),
           ),
           const SizedBox(height: 60),
           SizedBox(
@@ -76,7 +77,19 @@ class _SignupPageState extends State<SignupPage> {
                 backgroundColor: Color(0xff209653),
                 elevation: 0,
               ),
-              onPressed: () {}, //signup
+              onPressed: () {
+                FirebaseAuth.instance
+                    .createUserWithEmailAndPassword(
+                        email: _emailcontroller.text,
+                        password: _passwordcontroller.text)
+                    .then((value) {
+                  print("New account created");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                }).onError((error, stackTrace) {
+                  print("Error ${error.toString()}");
+                });
+              }, //signup
               child: const Text('Sign up',
                   style: TextStyle(
                       color: Colors.white, fontFamily: "Inter", fontSize: 20)),

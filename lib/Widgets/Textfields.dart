@@ -5,7 +5,11 @@ import 'package:flutter/src/widgets/placeholder.dart';
 class PurpTextField extends StatefulWidget {
   String entry;
   bool ispassword;
-  PurpTextField(this.entry, this.ispassword, {super.key});
+  String? Function(String?) valid;
+  TextEditingController controller;
+
+  PurpTextField(this.entry, this.ispassword, this.controller, this.valid,
+      {super.key});
 
   @override
   State<PurpTextField> createState() => _PurpTextFieldState();
@@ -20,7 +24,9 @@ class _PurpTextFieldState extends State<PurpTextField> {
     return SizedBox(
       height: height * 0.8,
       width: width * 0.06,
-      child: TextField(
+      child: TextFormField(
+        validator: widget.valid,
+        controller: widget.controller,
         textAlignVertical: TextAlignVertical(y: 1.0),
         obscureText: widget.ispassword ? _isObscure : false,
         decoration: InputDecoration(

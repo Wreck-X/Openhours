@@ -37,7 +37,8 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   slide_to_act: ^2.0.1
   palette_generator: ^0.3.0
-
+  firebase_core: ^2.10.0
+  firebase_auth: ^4.4.2
 
 dev_dependencies:
   flutter_test:
