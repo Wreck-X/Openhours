@@ -44,8 +44,8 @@ class _RestaurantCardState extends State<RestaurantCard> {
           child: Stack(
             children: [
               Container(
-                height: 250,
-                width: 180,
+                height: height * 0.32,
+                width: width * 0.5,
                 child: buildImage(widget.images[0]),
               ),
               Positioned(
@@ -93,10 +93,16 @@ class _RestaurantCardState extends State<RestaurantCard> {
                     child: Container(
                       decoration: BoxDecoration(color: Colors.transparent),
                       child: Row(children: [
-                        Icon(Icons.star, color: Color.fromRGBO(255, 215, 0, 1.0),),
+                        Icon(
+                          Icons.star,
+                          color: Color.fromRGBO(255, 215, 0, 1.0),
+                        ),
                         Text(
                           widget.rating.toString(),
-                          style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w900),
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900),
                         ),
                       ]),
                     ),

@@ -6,7 +6,7 @@ class Owner extends StatefulWidget {
   String? image;
   bool status = true;
   Owner(this.title, this.image, {Key? key}) : super(key: key);
-  
+
   @override
   State<Owner> createState() => _OwnerState();
 }
@@ -36,7 +36,7 @@ class _OwnerState extends State<Owner> {
               padding: const EdgeInsets.fromLTRB(0, 45, 0, 30),
               child: Text(
                 widget.title!,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 24,
                   fontFamily: "RobotoMono",
@@ -48,7 +48,7 @@ class _OwnerState extends State<Owner> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  border: Border(
+                  border: const Border(
                     top: BorderSide(width: 2, color: Colors.white),
                     left: BorderSide(width: 2, color: Colors.white),
                     right: BorderSide(width: 2, color: Colors.white),
