@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:openhours/Pages/Landing.dart';
 import 'package:openhours/Widgets/RestaurantCard.dart';
 import 'package:openhours/Widgets/appdrawer.dart';
 import '../Widgets/customappbar.dart';
@@ -403,13 +405,21 @@ class SideDrawer extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              Text(
-                "Logout",
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Ubuntu",
-                    fontSize: 20,
-                    color: Color(0xff9C9C9C)),
+              GestureDetector(
+                onTap: () {
+                  FirebaseAuth.instance.signOut().then((value) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LandingPage()));
+                  });
+                },
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Ubuntu",
+                      fontSize: 20,
+                      color: Color(0xff9C9C9C)),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
