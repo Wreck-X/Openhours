@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:openhours/Widgets/RestaurantCard.dart';
+import 'package:openhours/Widgets/appdrawer.dart';
 import '../Widgets/customappbar.dart';
 
 class Restaurants extends StatefulWidget {
@@ -137,7 +138,7 @@ class _RestaurantsState extends State<Restaurants> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
-        drawer: const Drawer(),
+        drawer: SideDrawer(width: width),
         body: Container(
           height: height,
           width: width,
@@ -147,8 +148,9 @@ class _RestaurantsState extends State<Restaurants> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 0, 30),
+                padding: const EdgeInsets.fromLTRB(10, 30, 0, 20),
                 child: Row(
                   children: [
                     GestureDetector(
@@ -157,15 +159,16 @@ class _RestaurantsState extends State<Restaurants> {
                       },
                       child: const Icon(Icons.menu),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        "OPEN HOURS",
-                        style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Inter"),
-                      ),
+                    SizedBox(
+                      width: width * 0.15,
+                    ),
+                    const Text(
+                      "OPEN HOURS",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Inter"),
                     ),
                   ],
                 ),
@@ -174,30 +177,38 @@ class _RestaurantsState extends State<Restaurants> {
                 padding: const EdgeInsets.only(left: 14.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text("Make sure your",
-                          style: TextStyle(
-                              fontSize: 32,
-                              fontFamily: "Inter",
-                              fontWeight: FontWeight.bold)),
-                      Text("restaurant is",
-                          style: TextStyle(
-                              fontSize: 32,
-                              fontFamily: "Inter",
-                              fontWeight: FontWeight.bold)),
-                      Text(
-                        "Open!",
-                        style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 32,
-                            fontFamily: "Inter",
-                            fontWeight: FontWeight.bold),
-                      ),
+                    children: [
+                      Container(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text("Make sure your",
+                              style: TextStyle(
+                                  fontSize: 32,
+                                  fontFamily: "Inter",
+                                  fontWeight: FontWeight.bold)),
+                          Text("restaurant is",
+                              style: TextStyle(
+                                  fontSize: 32,
+                                  fontFamily: "Inter",
+                                  fontWeight: FontWeight.bold)),
+                          Text(
+                            "Open!",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 32,
+                                fontFamily: "Inter",
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )),
                     ]),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(75, 30, 50, 25),
-                child: Row(
+              SizedBox(height: 20),
+              Align(
+                alignment: Alignment.center,
+                child: Wrap(
+                  spacing: 50,
                   children: [
                     GestureDetector(
                       onTap: () {
@@ -215,9 +226,6 @@ class _RestaurantsState extends State<Restaurants> {
                                 : Colors.black),
                       ),
                     ),
-                    const SizedBox(
-                      width: 50,
-                    ),
                     GestureDetector(
                       onTap: () {
                         setState(() {
@@ -233,9 +241,6 @@ class _RestaurantsState extends State<Restaurants> {
                                 ? Colors.green
                                 : Colors.black),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 50,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -256,6 +261,7 @@ class _RestaurantsState extends State<Restaurants> {
                   ],
                 ),
               ),
+              SizedBox(height: 35),
               Align(
                 alignment: Alignment.center,
                 child: SizedBox(
@@ -304,19 +310,119 @@ class _RestaurantsState extends State<Restaurants> {
                       }),
                 ),
               ),
-              Expanded(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF209653),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ));
+  }
+}
+
+class SideDrawer extends StatelessWidget {
+  const SideDrawer({
+    super.key,
+    required this.width,
+  });
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Color(0xfff5f5f5),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SizedBox(
+          height: 60,
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 10, 15),
+          child: Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 2.5,
+                  ),
+                ),
+                child: CircleAvatar(
+                  backgroundColor: Color(0xfff5f5f5),
+                  radius: 30,
+                  backgroundImage: NetworkImage(
+                      'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                  "Hello 👋",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Inter",
+                      fontSize: 26),
+                ),
+                FittedBox(
+                    child: Text(
+                  "satvmishi@gmail.com",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontFamily: "Inter",
+                      fontSize: 16),
+                ))
+              ]),
+            ],
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+          child: Container(
+            height: 1.0,
+            width: width,
+            color: Colors.black,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Status",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Ubuntu",
+                    fontSize: 20,
+                    color: Color(0xff9C9C9C)),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                child: Container(
+                  height: 2.0,
+                  width: width,
+                  color: Colors.grey,
+                ),
+              ),
+              Text(
+                "Logout",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Ubuntu",
+                    fontSize: 20,
+                    color: Color(0xff9C9C9C)),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                child: Container(
+                  height: 2.0,
+                  width: width,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        )
+      ]),
+    );
   }
 }
