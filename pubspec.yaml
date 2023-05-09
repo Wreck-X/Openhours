@@ -39,6 +39,7 @@ dependencies:
   palette_generator: ^0.3.0
   firebase_core: ^2.10.0
   firebase_auth: ^4.4.2
+  cloud_firestore: ^4.5.3
 
 dev_dependencies:
   flutter_test:

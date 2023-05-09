@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:openhours/Pages/RestaurantDetails.dart';
+import 'package:openhours/Pages/ProductDetailsPage.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 
 class RestaurantCard extends StatefulWidget {
   String title;
   double rating;
   bool color_choice;
-  List images;
-  List food;
-  List drinks;
-  RestaurantCard(this.title, this.rating, this.color_choice, this.images,
-      this.food, this.drinks,
+  String image;
+  List avail;
+  String desc;
+  RestaurantCard(this.title, this.rating, this.color_choice, this.image,
+      this.avail, this.desc,
       {Key? key})
       : super(key: key);
 
@@ -33,8 +34,8 @@ class _RestaurantCardState extends State<RestaurantCard> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RestaurantDetails(
-                      widget.images[0], widget.food, widget.drinks)));
+                  builder: (context) => productdetailspage(widget.title,
+                      widget.desc, widget.rating, widget.avail, widget.image)));
         },
         child: Card(
           shape: RoundedRectangleBorder(
@@ -46,7 +47,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
               Container(
                 height: height * 0.32,
                 width: width * 0.5,
-                child: buildImage(widget.images[0]),
+                child: buildImage(widget.image),
               ),
               Positioned(
                 bottom: 50,

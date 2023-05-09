@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -77,18 +78,20 @@ class _SignupPageState extends State<SignupPage> {
                 backgroundColor: Color(0xff209653),
                 elevation: 0,
               ),
-              onPressed: () {
-                FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: _emailcontroller.text,
-                        password: _passwordcontroller.text)
-                    .then((value) {
-                  print("New account created");
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginPage()));
-                }).onError((error, stackTrace) {
-                  print("Error ${error.toString()}");
-                });
+              onPressed: () async {
+                final auth = FirebaseAuth.instance;
+                final newUser = await auth.createUserWithEmailAndPassword(
+                    email: _emailcontroller.text,
+                    password: _passwordcontroller.text);
+                final userRef = FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(newUser.user?.uid);
+                await userRef.set({
+                  'email': _emailcontroller.text,
+                  'owner': false,
+                  // Add any other user information here
+                }).then((value) => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage())));
               }, //signup
               child: const Text('Sign up',
                   style: TextStyle(

@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:openhours/Pages/Landing.dart';
+import 'package:openhours/Pages/Login.dart';
 import 'package:openhours/Widgets/RestaurantCard.dart';
 import 'package:openhours/Widgets/appdrawer.dart';
 import '../Widgets/customappbar.dart';
@@ -15,86 +17,59 @@ class Restaurants extends StatefulWidget {
 class _RestaurantsState extends State<Restaurants> {
   TextEditingController editingController = TextEditingController();
   final restaurantcards = [
-    RestaurantCard("Casablanca", 3.4, true, const [
-      'https://lh3.googleusercontent.com/p/AF1QipNHr_KPpZ0orf3tXeuOjtChdiFhlgF66u_nUKDD=s1360-w1360-h1020',
-      'https://img.restaurantguru.com/cfd6-Casablanca-Vallikavu-interior.jpg',
-      'https://10619-2.s.cdn12.com/rests/small/w285/102_505848815.jpg'
-    ], const [
-      'alfam',
-      'shawai',
-      'Shawarma',
-      'Kizhi Biryani'
-    ], const [
-      'Orange Juice',
-      'Lemon Juice',
-      'Lassi'
-    ]),
-    RestaurantCard("Spicy Villa family restaurant", 4.2, false, const [
-      'https://10619-2.s.cdn12.com/rests/original/106_509754993.jpg',
-      'https://img.restaurantguru.com/c48a-Spicy-villa-family-Restaurant-Vallikavu-design.jpg',
-      'https://img.restaurantguru.com/re84-Spicy-villa-family-Restaurant-interior.jpg'
-    ], const [
-      'alfam',
-      'shawai',
-      'Shawarma',
-      'Kizhi Biryani'
-    ], const [
-      'Orange Juice',
-      'Lemon Juice',
-      'Lassi'
-    ]),
-    RestaurantCard("Califo", 4.3, false, const [
-      'https://img.restaurantguru.com/w550/h367/rfc1-Califo-Restaurant-logo.jpg',
-      'https://img.restaurantguru.com/c9cb-Califo-Restaurant-view.jpg',
-      'https://img.restaurantguru.com/r98b-Califo-Restaurant-interior.jpg'
-    ], const [
-      'alfam',
-      'shawai',
-      'Shawarma',
-      'Kizhi Biryani'
-    ], const [
-      'Orange Juice',
-      'Lemon Juice',
-      'Lassi'
-    ]),
-    RestaurantCard("Cafe Monarch", 3.7, true, const [
-      'https://lh3.googleusercontent.com/p/AF1QipPrP4w5kwv8FxjBVYTO12Ef3FQj2-sTKeEJbzg7=s1360-w1360-h1020'
-    ], const [], const [])
+    RestaurantCard(
+        "Casablanca",
+        3.4,
+        true,
+        'https://10619-2.s.cdn12.com/rests/original/102_506177677.jpg',
+        ['Swiggy', 'Zomato'],
+        'This restaurant is remarkable for its nice service and is also pretty well known for its non-vegetarian options. Most of the time, a lovely ambience is to be found here. The restaurant also offers catering services for special events and occasions. But many guests on google didnt grant casablanca a high rating.'),
+    RestaurantCard(
+        "Spicy Villa family restaurant",
+        4.2,
+        false,
+        'https://10619-2.s.cdn12.com/rests/original/106_509754993.jpg',
+        ['Swiggy'],
+        'This restaurant offers food delivery for the convenience of its customers. Most visitors mark that the service is decent. The exotic atmosphere will be exactly just what you need after a long working day. But google users rated Spicy villa family Restaurant and it didnt earn a high rating.'),
+    RestaurantCard(
+        "Califo",
+        4.3,
+        false,
+        'https://content3.jdmagicbox.com/comp/kollam/r8/9999px474.x474.220920205800.m4r8/catalogue/califo-restaurant-amrithapuri-kollam-restaurants-3o7lrr85w2.jpg',
+        ['Zomato'],
+        'In accordance with the guests opinions, waiters serve nicely cooked chicken biryani and good fried chicken here. When visiting this restaurant, it is a must to try delicious juice. Visitors say that the service is prompt here. But Califo Restaurant has been rated below average by Google.'),
+    RestaurantCard(
+        "Cafe Monarch",
+        3.7,
+        true,
+        'https://10619-2.s.cdn12.com/rests/original/109_504980439.jpg',
+        ['N/A'],
+        'Many people come to order perfectly cooked shawarma. Coffee that you can try is good. Its always a good idea to try something new, enjoying the charming atmosphere. As for the Google rating, this restaurant earned 4.3.')
   ];
   final newrestaurants = [
-    RestaurantCard("Cafe Monarch", 3.7, true, const [
-      'https://lh3.googleusercontent.com/p/AF1QipPrP4w5kwv8FxjBVYTO12Ef3FQj2-sTKeEJbzg7=s1360-w1360-h1020'
-    ], const [], const [])
+    RestaurantCard(
+        "Cafe Monarch",
+        3.7,
+        true,
+        'https://10619-2.s.cdn12.com/rests/original/109_504980439.jpg',
+        ['N/A'],
+        'Many people come to order perfectly cooked shawarma. Coffee that you can try is good. Its always a good idea to try something new, enjoying the charming atmosphere. As for the Google rating, this restaurant earned 4.3.')
   ];
   final poprestaurants = [
-    RestaurantCard("Spicy Villa family restaurant", 4.2, false, const [
-      'https://10619-2.s.cdn12.com/rests/original/106_509754993.jpg',
-      'https://img.restaurantguru.com/c48a-Spicy-villa-family-Restaurant-Vallikavu-design.jpg',
-      'https://img.restaurantguru.com/re84-Spicy-villa-family-Restaurant-interior.jpg'
-    ], const [
-      'alfam',
-      'shawai',
-      'Shawarma',
-      'Kizhi Biryani'
-    ], const [
-      'Orange Juice',
-      'Lemon Juice',
-      'Lassi'
-    ]),
-    RestaurantCard("Califo", 4.3, false, const [
-      'https://img.restaurantguru.com/w550/h367/rfc1-Califo-Restaurant-logo.jpg',
-      'https://img.restaurantguru.com/c9cb-Califo-Restaurant-view.jpg',
-      'https://img.restaurantguru.com/r98b-Califo-Restaurant-interior.jpg'
-    ], const [
-      'alfam',
-      'shawai',
-      'Shawarma',
-      'Kizhi Biryani'
-    ], const [
-      'Orange Juice',
-      'Lemon Juice',
-      'Lassi'
-    ]),
+    RestaurantCard(
+        "Spicy Villa family restaurant",
+        4.2,
+        false,
+        'https://10619-2.s.cdn12.com/rests/original/106_509754993.jpg',
+        ['Swiggy'],
+        'This restaurant offers food delivery for the convenience of its customers. Most visitors mark that the service is decent. The exotic atmosphere will be exactly just what you need after a long working day. But google users rated Spicy villa family Restaurant and it didnt earn a high rating.'),
+    RestaurantCard(
+        "Califo",
+        4.3,
+        false,
+        'https://content3.jdmagicbox.com/comp/kollam/r8/9999px474.x474.220920205800.m4r8/catalogue/califo-restaurant-amrithapuri-kollam-restaurants-3o7lrr85w2.jpg',
+        ['Zomato'],
+        'In accordance with the guests opinions, waiters serve nicely cooked chicken biryani and good fried chicken here. When visiting this restaurant, it is a must to try delicious juice. Visitors say that the service is prompt here. But Califo Restaurant has been rated below average by Google.'),
   ];
   var varyingcards;
   var newvaryingcards;
@@ -389,13 +364,28 @@ class SideDrawer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Status",
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Ubuntu",
-                    fontSize: 20,
-                    color: Color(0xff9C9C9C)),
+              GestureDetector(
+                onTap: () async {
+                  var logged = Loggedin();
+                  FirebaseFirestore firestore = FirebaseFirestore.instance;
+                  DocumentSnapshot snapshot = await firestore
+                      .collection('users')
+                      .doc(Loggedin.id)
+                      .get();
+                  if (snapshot.exists) {
+                    var owner =
+                        (snapshot.data() as Map<String, dynamic>)['owner'];
+                    print(owner);
+                  }
+                },
+                child: const Text(
+                  "Status",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Ubuntu",
+                      fontSize: 20,
+                      color: Color(0xff9C9C9C)),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 10, 10, 10),

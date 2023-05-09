@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +10,10 @@ import 'package:openhours/Pages/RestaurantDetails.dart';
 import 'package:openhours/Pages/Restaurants.dart';
 import 'package:openhours/Pages/Owner.dart';
 import 'package:openhours/Widgets/Textfields.dart';
+
+class Loggedin {
+  static var id;
+}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     return null;
   };
+
   TextEditingController _emailcontroller = TextEditingController();
   TextEditingController _passwordcontroller = TextEditingController();
   @override
@@ -76,12 +84,15 @@ class _LoginPageState extends State<LoginPage> {
               width: width * 0.6,
               height: height * 0.06,
               child: ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance
+                onPressed: () async {
+                  final auth = FirebaseAuth.instance;
+                  await auth
                       .signInWithEmailAndPassword(
                           email: _emailcontroller.text,
                           password: _passwordcontroller.text)
-                      .then((value) {
+                      .then((UserCredential) {
+                    Loggedin.id = UserCredential.user?.uid;
+                    print(Loggedin.id);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Restaurants()));
                   }).onError((error, stackTrace) {
