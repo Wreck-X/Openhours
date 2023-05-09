@@ -16,7 +16,7 @@ class PurpTextField extends StatefulWidget {
 }
 
 class _PurpTextFieldState extends State<PurpTextField> {
-  bool _isObscure = false;
+  bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

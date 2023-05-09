@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:openhours/Pages/Landing.dart';
 import 'package:openhours/Pages/Login.dart';
+import 'package:openhours/Pages/ProductDetailsPage.dart';
 import 'package:openhours/Widgets/RestaurantCard.dart';
 import 'package:openhours/Widgets/appdrawer.dart';
 import '../Widgets/customappbar.dart';
@@ -375,7 +376,27 @@ class SideDrawer extends StatelessWidget {
                   if (snapshot.exists) {
                     var owner =
                         (snapshot.data() as Map<String, dynamic>)['owner'];
-                    print(owner);
+                    var title = (snapshot.data()
+                        as Map<String, dynamic>)['restauranttitle'];
+                    var status =
+                        (snapshot.data() as Map<String, dynamic>)['status'];
+                    var image =
+                        (snapshot.data() as Map<String, dynamic>)['image'];
+                    var avail = (snapshot.data()
+                        as Map<String, dynamic>)['availableon'];
+                    var desc =
+                        (snapshot.data() as Map<String, dynamic>)['desc'];
+                    var rating =
+                        (snapshot.data() as Map<String, dynamic>)['rating'];
+
+                    if (owner) ;
+                    {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => productdetailspage(
+                                  title, desc, rating, avail, image)));
+                    }
                   }
                 },
                 child: const Text(

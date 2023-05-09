@@ -89,6 +89,7 @@ class _SignupPageState extends State<SignupPage> {
                 await userRef.set({
                   'email': _emailcontroller.text,
                   'owner': false,
+
                   // Add any other user information here
                 }).then((value) => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage())));
