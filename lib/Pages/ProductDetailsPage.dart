@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:openhours/Pages/Login.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class productdetailspage extends StatefulWidget {
   String title;
@@ -78,6 +79,32 @@ class _productdetailspageState extends State<productdetailspage> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 26)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: GestureDetector(
+                    onTap: () {
+                      String url = 'https://example.com';
+                      Uri uri = Uri.parse(url);
+                      launchUrl(uri);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: Colors.blue,
+                          size: 20,
+                        ),
+                        Text(
+                          "Need Directions?",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Text(widget.desc,
                     style: TextStyle(color: Colors.white, fontSize: 16)),

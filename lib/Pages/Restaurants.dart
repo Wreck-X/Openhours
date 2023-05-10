@@ -268,8 +268,9 @@ class _RestaurantsState extends State<Restaurants> {
                             .doc('c6sf3ZpxLVkxksUSd236')
                             .snapshots(),
                         builder: (context, snapshot) {
-                          final docs = snapshot.data?.data();
-                          print('something $docs');
+                          final docs =
+                              snapshot.data?.data()?["Restaurants"] ?? [];
+
                           // var datalist = (data as Map<String, dynamic>).values.toList();
 
                           return ListView.builder(
@@ -278,7 +279,16 @@ class _RestaurantsState extends State<Restaurants> {
                               itemBuilder: (BuildContext context, int index) {
                                 var document = snapshot.data;
                                 if (selectedIndex == 0) {
-                                  return Row(children: []);
+                                  return Row(
+                                      children: docs
+                                          .map((val) => RestaurantCard(
+                                              val['title'],
+                                              val['rating'],
+                                              val['status'],
+                                              val['image'],
+                                              val['avail'],
+                                              val['desc']))
+                                          .toList());
                                 } else if (selectedIndex == 1) {
                                   return Row(children: newvaryingcards);
                                 } else {
