@@ -213,6 +213,13 @@ class _productdetailspageState extends State<productdetailspage> {
                   .then((value) => print("Field updated"))
                   .catchError(
                       (error) => print("Failed to update field: $error"));
+              FirebaseFirestore.instance
+                  .collection('Restaurant')
+                  .doc("c6sf3ZpxLVkxksUSd236")
+                  .update({'status': !status})
+                  .then((value) => print("Rest Field updated"))
+                  .catchError(
+                      (error) => print("Failed to update field: $error"));
             },
           );
   }
