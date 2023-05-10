@@ -274,20 +274,21 @@ class _RestaurantsState extends State<Restaurants> {
                           // var datalist = (data as Map<String, dynamic>).values.toList();
 
                           return ListView.builder(
-                              itemCount: 4,
+                              itemCount: 1,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (BuildContext context, int index) {
                                 var document = snapshot.data;
                                 if (selectedIndex == 0) {
                                   return Row(
                                       children: docs
-                                          .map((val) => RestaurantCard(
-                                              val['title'],
-                                              val['rating'],
-                                              val['status'],
-                                              val['image'],
-                                              val['avail'],
-                                              val['desc']))
+                                          .map<RestaurantCard>((val) =>
+                                              RestaurantCard(
+                                                  val['title'],
+                                                  val['rating'],
+                                                  val['status'],
+                                                  val['image'],
+                                                  val['avail'],
+                                                  val['desc']))
                                           .toList());
                                 } else if (selectedIndex == 1) {
                                   return Row(children: newvaryingcards);

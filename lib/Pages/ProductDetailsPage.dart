@@ -10,7 +10,7 @@ class productdetailspage extends StatefulWidget {
   double rating;
   List avail;
   String image;
-
+  bool status = false;
   productdetailspage(this.title, this.desc, this.rating, this.avail, this.image,
       {Key? key})
       : super(key: key);
@@ -28,6 +28,7 @@ class _productdetailspageState extends State<productdetailspage> {
     setState(() {
       _doc = doc;
       status = _doc!['status'];
+      print('status');
     });
   }
 
@@ -56,7 +57,7 @@ class _productdetailspageState extends State<productdetailspage> {
                   colors: [
                     Colors.transparent,
                     Colors.transparent,
-                    Colors.transparent,
+                    Colors.black26,
                     Colors.black,
                     Colors.black
                   ],
@@ -177,7 +178,7 @@ class _productdetailspageState extends State<productdetailspage> {
                                         ))
                                     .toList()
                               ])
-                            : getSlideActionWidget(status),
+                            : getSlideActionWidget(status, widget.status),
                       ),
                     ),
                   ],
@@ -191,7 +192,7 @@ class _productdetailspageState extends State<productdetailspage> {
     );
   }
 
-  Widget getSlideActionWidget(bool status) {
+  Widget getSlideActionWidget(bool status, bool widge) {
     return status
         ? SlideAction(
             animationDuration: Duration(milliseconds: 400),
@@ -200,25 +201,44 @@ class _productdetailspageState extends State<productdetailspage> {
             sliderButtonIcon: Icon(Icons.lock_outline),
             sliderButtonIconSize: 10,
             elevation: 4,
-            text: "Slide to Open",
+            text: "Slide to Close",
             textStyle: TextStyle(fontSize: 18, color: Colors.white),
-            outerColor: Color.fromARGB(255, 227, 50, 38),
+            outerColor: Color.fromARGB(255, 38, 227, 38),
             innerColor: Colors.white54,
             onSubmit: () async {
-              FirebaseFirestore.instance
+              setState(() {
+                widge = !widge;
+              });
+              var userdata = await FirebaseFirestore.instance
                   .collection('users')
                   .doc(Loggedin.id)
-                  .update({'status': !status})
-                  .then((value) => print("User Field updated"))
-                  .catchError(
-                      (error) => print("Failed to update field: $error"));
-              FirebaseFirestore.instance
+                  .get();
+              var id = (userdata.data() as Map<String, dynamic>)['id'];
+              var data = await FirebaseFirestore.instance
                   .collection('Restaurant')
                   .doc("c6sf3ZpxLVkxksUSd236")
-                  .update({'status': !status})
-                  .then((value) => print("Rest Field updated"))
-                  .catchError(
-                      (error) => print("Failed to update field: $error"));
+                  .get();
+              print(data.data());
+              var datavals = data.data()!.values.toList()[0];
+              print(datavals);
+              var updatedarray = datavals.map((obj) {
+                if (obj['id'] == id) {
+                  return {...obj, "status": !status};
+                } else {
+                  return obj;
+                }
+              });
+              FirebaseFirestore.instance
+                  .collection("Restaurant")
+                  .doc("c6sf3ZpxLVkxksUSd236")
+                  .update({"Restaurants": updatedarray});
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(Loggedin.id)
+                  .update({"status": !status});
+              setState(() {
+                status = !status;
+              });
             },
           )
         : SlideAction(
@@ -228,26 +248,45 @@ class _productdetailspageState extends State<productdetailspage> {
             sliderButtonIcon: Icon(Icons.lock_open),
             sliderButtonIconSize: 10,
             elevation: 4,
-            text: "Slide to Close",
+            text: "Slide to Open",
             textStyle: TextStyle(fontSize: 18, color: Colors.white),
-            outerColor: Color.fromARGB(255, 38, 227, 38),
+            outerColor: Color.fromARGB(255, 227, 50, 38),
             innerColor: Colors.white54,
             onSubmit: () async {
-              FirebaseFirestore.instance
+              setState(() {
+                widge = !widge;
+              });
+              var userdata = await FirebaseFirestore.instance
                   .collection('users')
                   .doc(Loggedin.id)
-                  .update({'status': !status})
-                  .then((value) => print("Field updated"))
-                  .catchError(
-                      (error) => print("Failed to update field: $error"));
-              FirebaseFirestore.instance
+                  .get();
+              var id = (userdata.data() as Map<String, dynamic>)['id'];
+              var data = await FirebaseFirestore.instance
                   .collection('Restaurant')
                   .doc("c6sf3ZpxLVkxksUSd236")
-                  .update({'status': !status})
-                  .then((value) => print("Rest Field updated"))
-                  .catchError(
-                      (error) => print("Failed to update field: $error"));
-            },
-          );
+                  .get();
+              print(data.data());
+              var datavals = data.data()!.values.toList()[0];
+              print(datavals);
+              var updatedarray = datavals.map((obj) {
+                if (obj['id'] == id) {
+                  print(!status);
+                  return {...obj, "status": !status};
+                } else {
+                  return obj;
+                }
+              });
+              FirebaseFirestore.instance
+                  .collection("Restaurant")
+                  .doc("c6sf3ZpxLVkxksUSd236")
+                  .update({"Restaurants": updatedarray});
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(Loggedin.id)
+                  .update({"status": !status});
+              setState(() {
+                status = !status;
+              });
+            });
   }
 }
