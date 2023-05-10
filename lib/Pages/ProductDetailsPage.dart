@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:openhours/Pages/Login.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 class productdetailspage extends StatefulWidget {
   String title;
@@ -16,6 +19,23 @@ class productdetailspage extends StatefulWidget {
 }
 
 class _productdetailspageState extends State<productdetailspage> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  DocumentSnapshot? _doc;
+  bool status = false;
+  Future<void> _fetchDoc() async {
+    final doc = await firestore.collection('users').doc(Loggedin.id).get();
+    setState(() {
+      _doc = doc;
+      status = _doc!['status'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchDoc();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -111,24 +131,26 @@ class _productdetailspageState extends State<productdetailspage> {
                           borderRadius: BorderRadius.circular(20.0),
                           color: Colors.transparent,
                         ),
-                        child: Column(children: [
-                          Text(
-                            'Available at:',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          ...widget.avail
-                              .map((item) => Text(
-                                    item,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                              .toList()
-                        ]),
+                        child: Loggedin.owner
+                            ? Column(children: [
+                                Text(
+                                  'Available at:',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                ...widget.avail
+                                    .map((item) => Text(
+                                          item,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        ))
+                                    .toList()
+                              ])
+                            : getSlideActionWidget(status),
                       ),
                     ),
                   ],
@@ -140,5 +162,58 @@ class _productdetailspageState extends State<productdetailspage> {
         ]),
       ),
     );
+  }
+
+  Widget getSlideActionWidget(bool status) {
+    return status
+        ? SlideAction(
+            animationDuration: Duration(milliseconds: 400),
+            key: ValueKey("slide_action_open"), // add key
+            submittedIcon: Icon(Icons.lock_open),
+            sliderButtonIcon: Icon(Icons.lock_outline),
+            sliderButtonIconSize: 10,
+            elevation: 4,
+            text: "Slide to Open",
+            textStyle: TextStyle(fontSize: 18, color: Colors.white),
+            outerColor: Color.fromARGB(255, 227, 50, 38),
+            innerColor: Colors.white54,
+            onSubmit: () async {
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(Loggedin.id)
+                  .update({'status': !status})
+                  .then((value) => print("User Field updated"))
+                  .catchError(
+                      (error) => print("Failed to update field: $error"));
+              FirebaseFirestore.instance
+                  .collection('Restaurant')
+                  .doc("c6sf3ZpxLVkxksUSd236")
+                  .update({'status': !status})
+                  .then((value) => print("Rest Field updated"))
+                  .catchError(
+                      (error) => print("Failed to update field: $error"));
+            },
+          )
+        : SlideAction(
+            animationDuration: Duration(milliseconds: 400),
+            key: ValueKey("slide_action_close"), // add key
+            submittedIcon: Icon(Icons.lock_outline),
+            sliderButtonIcon: Icon(Icons.lock_open),
+            sliderButtonIconSize: 10,
+            elevation: 4,
+            text: "Slide to Close",
+            textStyle: TextStyle(fontSize: 18, color: Colors.white),
+            outerColor: Color.fromARGB(255, 38, 227, 38),
+            innerColor: Colors.white54,
+            onSubmit: () async {
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(Loggedin.id)
+                  .update({'status': !status})
+                  .then((value) => print("Field updated"))
+                  .catchError(
+                      (error) => print("Failed to update field: $error"));
+            },
+          );
   }
 }

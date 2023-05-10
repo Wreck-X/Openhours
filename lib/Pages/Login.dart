@@ -13,6 +13,7 @@ import 'package:openhours/Widgets/Textfields.dart';
 
 class Loggedin {
   static var id;
+  static var owner;
 }
 
 class LoginPage extends StatefulWidget {
@@ -85,14 +86,21 @@ class _LoginPageState extends State<LoginPage> {
               height: height * 0.06,
               child: ElevatedButton(
                 onPressed: () async {
+                  FirebaseFirestore firestore = FirebaseFirestore.instance;
                   final auth = FirebaseAuth.instance;
+
                   await auth
                       .signInWithEmailAndPassword(
                           email: _emailcontroller.text,
                           password: _passwordcontroller.text)
-                      .then((UserCredential) {
+                      .then((UserCredential) async {
                     Loggedin.id = UserCredential.user?.uid;
-                    print(Loggedin.id);
+                    DocumentSnapshot snapshot = await firestore
+                        .collection('users')
+                        .doc(Loggedin.id)
+                        .get();
+                    Loggedin.owner =
+                        (snapshot.data() as Map<String, dynamic>)['owner'];
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Restaurants()));
                   }).onError((error, stackTrace) {

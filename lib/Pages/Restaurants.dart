@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,27 @@ import 'package:openhours/Widgets/RestaurantCard.dart';
 import 'package:openhours/Widgets/appdrawer.dart';
 import '../Widgets/customappbar.dart';
 
+class Datalist {
+  static var data;
+  static List<RestaurantCard> restaurantcards = [];
+}
+
 class Restaurants extends StatefulWidget {
-  const Restaurants({super.key});
+  Restaurants({super.key});
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Future<List<RestaurantCard>> getRestaurantCards() async {
+    var doc = await firestore
+        .collection('Restaurant')
+        .doc("c6sf3ZpxLVkxksUSd236")
+        .get();
+    var data = doc.data();
+    var datalist = (data as Map<String, dynamic>).values.toList();
+    Datalist.data = datalist[0];
+    return Datalist.data.map<RestaurantCard>((item) {
+      return RestaurantCard(item['title'], item['rating'], item['status'],
+          item['image'], item['avail'], item['desc']);
+    }).toList();
+  }
 
   @override
   State<Restaurants> createState() => _RestaurantsState();
@@ -17,36 +37,11 @@ class Restaurants extends StatefulWidget {
 
 class _RestaurantsState extends State<Restaurants> {
   TextEditingController editingController = TextEditingController();
-  final restaurantcards = [
-    RestaurantCard(
-        "Casablanca",
-        3.4,
-        true,
-        'https://10619-2.s.cdn12.com/rests/original/102_506177677.jpg',
-        ['Swiggy', 'Zomato'],
-        'This restaurant is remarkable for its nice service and is also pretty well known for its non-vegetarian options. Most of the time, a lovely ambience is to be found here. The restaurant also offers catering services for special events and occasions. But many guests on google didnt grant casablanca a high rating.'),
-    RestaurantCard(
-        "Spicy Villa family restaurant",
-        4.2,
-        false,
-        'https://10619-2.s.cdn12.com/rests/original/106_509754993.jpg',
-        ['Swiggy'],
-        'This restaurant offers food delivery for the convenience of its customers. Most visitors mark that the service is decent. The exotic atmosphere will be exactly just what you need after a long working day. But google users rated Spicy villa family Restaurant and it didnt earn a high rating.'),
-    RestaurantCard(
-        "Califo",
-        4.3,
-        false,
-        'https://content3.jdmagicbox.com/comp/kollam/r8/9999px474.x474.220920205800.m4r8/catalogue/califo-restaurant-amrithapuri-kollam-restaurants-3o7lrr85w2.jpg',
-        ['Zomato'],
-        'In accordance with the guests opinions, waiters serve nicely cooked chicken biryani and good fried chicken here. When visiting this restaurant, it is a must to try delicious juice. Visitors say that the service is prompt here. But Califo Restaurant has been rated below average by Google.'),
-    RestaurantCard(
-        "Cafe Monarch",
-        3.7,
-        true,
-        'https://10619-2.s.cdn12.com/rests/original/109_504980439.jpg',
-        ['N/A'],
-        'Many people come to order perfectly cooked shawarma. Coffee that you can try is good. Its always a good idea to try something new, enjoying the charming atmosphere. As for the Google rating, this restaurant earned 4.3.')
-  ];
+
+  var newvaryingcards;
+  var popvaryingcards;
+  var varyingcards;
+
   final newrestaurants = [
     RestaurantCard(
         "Cafe Monarch",
@@ -72,21 +67,11 @@ class _RestaurantsState extends State<Restaurants> {
         ['Zomato'],
         'In accordance with the guests opinions, waiters serve nicely cooked chicken biryani and good fried chicken here. When visiting this restaurant, it is a must to try delicious juice. Visitors say that the service is prompt here. But Califo Restaurant has been rated below average by Google.'),
   ];
-  var varyingcards;
-  var newvaryingcards;
-  var popvaryingcards;
-  @override
-  void initState() {
-    varyingcards = restaurantcards;
-    newvaryingcards = newrestaurants;
-    popvaryingcards = poprestaurants;
-    super.initState();
-  }
 
   void filtersearch(String query) {
     setState(() {
       if (selectedIndex == 0) {
-        varyingcards = restaurantcards
+        varyingcards = Datalist.restaurantcards
             .where((item) =>
                 item.title.toLowerCase().contains(query.toLowerCase()))
             .toList();
@@ -113,6 +98,8 @@ class _RestaurantsState extends State<Restaurants> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    CollectionReference reference =
+        FirebaseFirestore.instance.collection('Restaurant');
     return Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
@@ -190,6 +177,7 @@ class _RestaurantsState extends State<Restaurants> {
                   children: [
                     GestureDetector(
                       onTap: () {
+                        print(Datalist.data);
                         setState(() {
                           selectedIndex = 0;
                         });
@@ -273,20 +261,31 @@ class _RestaurantsState extends State<Restaurants> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 40),
                 child: SizedBox(
-                  height: 350,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (selectedIndex == 0) {
-                          return Row(children: varyingcards);
-                        } else if (selectedIndex == 1) {
-                          return Row(children: newvaryingcards);
-                        } else {
-                          return Row(children: popvaryingcards);
-                        }
-                      }),
-                ),
+                    height: 350,
+                    child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("Restaurant")
+                            .doc('c6sf3ZpxLVkxksUSd236')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          final docs = snapshot.data?.data();
+                          print('something $docs');
+                          // var datalist = (data as Map<String, dynamic>).values.toList();
+
+                          return ListView.builder(
+                              itemCount: 4,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                var document = snapshot.data;
+                                if (selectedIndex == 0) {
+                                  return Row(children: []);
+                                } else if (selectedIndex == 1) {
+                                  return Row(children: newvaryingcards);
+                                } else {
+                                  return Row(children: popvaryingcards);
+                                }
+                              });
+                        })),
               ),
             ],
           ),
