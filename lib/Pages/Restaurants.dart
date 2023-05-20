@@ -27,7 +27,7 @@ class Restaurants extends StatefulWidget {
     Datalist.data = datalist[0];
     return Datalist.data.map<RestaurantCard>((item) {
       return RestaurantCard(item['title'], item['rating'], item['status'],
-          item['image'], item['avail'], item['desc']);
+          item['image'], item['avail'], item['desc'], item['id']);
     }).toList();
   }
 
@@ -42,32 +42,6 @@ class _RestaurantsState extends State<Restaurants> {
   var popvaryingcards;
   var varyingcards;
 
-  final newrestaurants = [
-    RestaurantCard(
-        "Cafe Monarch",
-        3.7,
-        true,
-        'https://10619-2.s.cdn12.com/rests/original/109_504980439.jpg',
-        ['N/A'],
-        'Many people come to order perfectly cooked shawarma. Coffee that you can try is good. Its always a good idea to try something new, enjoying the charming atmosphere. As for the Google rating, this restaurant earned 4.3.')
-  ];
-  final poprestaurants = [
-    RestaurantCard(
-        "Spicy Villa family restaurant",
-        4.2,
-        false,
-        'https://10619-2.s.cdn12.com/rests/original/106_509754993.jpg',
-        ['Swiggy'],
-        'This restaurant offers food delivery for the convenience of its customers. Most visitors mark that the service is decent. The exotic atmosphere will be exactly just what you need after a long working day. But google users rated Spicy villa family Restaurant and it didnt earn a high rating.'),
-    RestaurantCard(
-        "Califo",
-        4.3,
-        false,
-        'https://content3.jdmagicbox.com/comp/kollam/r8/9999px474.x474.220920205800.m4r8/catalogue/califo-restaurant-amrithapuri-kollam-restaurants-3o7lrr85w2.jpg',
-        ['Zomato'],
-        'In accordance with the guests opinions, waiters serve nicely cooked chicken biryani and good fried chicken here. When visiting this restaurant, it is a must to try delicious juice. Visitors say that the service is prompt here. But Califo Restaurant has been rated below average by Google.'),
-  ];
-
   void filtersearch(String query) {
     setState(() {
       if (selectedIndex == 0) {
@@ -77,13 +51,13 @@ class _RestaurantsState extends State<Restaurants> {
             .toList();
       }
       if (selectedIndex == 1) {
-        newvaryingcards = newrestaurants
+        newvaryingcards = Datalist.restaurantcards
             .where((item) =>
                 item.title.toLowerCase().contains(query.toLowerCase()))
             .toList();
       }
       if (selectedIndex == 2) {
-        popvaryingcards = poprestaurants
+        popvaryingcards = Datalist.restaurantcards
             .where((item) =>
                 item.title.toLowerCase().contains(query.toLowerCase()))
             .toList();
@@ -98,8 +72,7 @@ class _RestaurantsState extends State<Restaurants> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    CollectionReference reference =
-        FirebaseFirestore.instance.collection('Restaurant');
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
@@ -288,7 +261,8 @@ class _RestaurantsState extends State<Restaurants> {
                                                   val['status'],
                                                   val['image'],
                                                   val['avail'],
-                                                  val['desc']))
+                                                  val['desc'],
+                                                  val['id']))
                                           .toList());
                                 } else if (selectedIndex == 1) {
                                   return Row(children: newvaryingcards);
@@ -351,13 +325,14 @@ class SideDrawer extends StatelessWidget {
                       fontSize: 26),
                 ),
                 FittedBox(
+                    fit: BoxFit.fitWidth,
                     child: Text(
-                  "satvmishi@gmail.com",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontFamily: "Inter",
-                      fontSize: 16),
-                ))
+                      Loggedin.email,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontFamily: "Inter",
+                          fontSize: 12),
+                    ))
               ]),
             ],
           ),
@@ -398,14 +373,20 @@ class SideDrawer extends StatelessWidget {
                         (snapshot.data() as Map<String, dynamic>)['desc'];
                     var rating =
                         (snapshot.data() as Map<String, dynamic>)['rating'];
-
+                    var id = (snapshot.data() as Map<String, dynamic>)['id'];
                     if (owner) ;
                     {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => productdetailspage(
-                                  title, desc, rating, avail, image)));
+                                    title,
+                                    desc,
+                                    rating,
+                                    avail,
+                                    image,
+                                    id,
+                                  )));
                     }
                   }
                 },

@@ -14,6 +14,8 @@ import 'package:openhours/Widgets/Textfields.dart';
 class Loggedin {
   static var id;
   static var owner;
+  static var email;
+  static var resid;
 }
 
 class LoginPage extends StatefulWidget {
@@ -101,6 +103,17 @@ class _LoginPageState extends State<LoginPage> {
                         .get();
                     Loggedin.owner =
                         (snapshot.data() as Map<String, dynamic>)['owner'];
+                    Loggedin.email =
+                        (snapshot.data() as Map<String, dynamic>)['email'];
+                    Loggedin.resid =
+                        (snapshot.data() as Map<String, dynamic>)['id'];
+                    DocumentSnapshot secsnapshot = await firestore
+                        .collection('Restaurant')
+                        .doc("c6sf3ZpxLVkxksUSd236")
+                        .get();
+                    var data = secsnapshot.data();
+                    var datalist =
+                        (data as Map<String, dynamic>).values.toList();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Restaurants()));
                   }).onError((error, stackTrace) {

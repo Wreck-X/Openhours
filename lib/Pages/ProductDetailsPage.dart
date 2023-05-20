@@ -11,7 +11,9 @@ class productdetailspage extends StatefulWidget {
   List avail;
   String image;
   bool status = false;
+  bool forslider;
   productdetailspage(this.title, this.desc, this.rating, this.avail, this.image,
+      this.forslider,
       {Key? key})
       : super(key: key);
 
@@ -155,31 +157,30 @@ class _productdetailspageState extends State<productdetailspage> {
                   children: [
                     Expanded(
                       child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.transparent,
-                        ),
-                        child: Loggedin.owner
-                            ? Column(children: [
-                                Text(
-                                  'Available at:',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                ...widget.avail
-                                    .map((item) => Text(
-                                          item,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ))
-                                    .toList()
-                              ])
-                            : getSlideActionWidget(status, widget.status),
-                      ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.transparent,
+                          ),
+                          child: Loggedin.owner && widget.forslider
+                              ? getSlideActionWidget(status, widget.status)
+                              : Column(children: [
+                                  Text(
+                                    'Available at:',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  ...widget.avail
+                                      .map((item) => Text(
+                                            item,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          ))
+                                      .toList()
+                                ])),
                     ),
                   ],
                 ),

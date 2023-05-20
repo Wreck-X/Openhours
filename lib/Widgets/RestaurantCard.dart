@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:openhours/Pages/Login.dart';
 import 'package:openhours/Pages/RestaurantDetails.dart';
 import 'package:openhours/Pages/ProductDetailsPage.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -11,8 +12,9 @@ class RestaurantCard extends StatefulWidget {
   String image;
   List avail;
   String desc;
+  int id;
   RestaurantCard(this.title, this.rating, this.color_choice, this.image,
-      this.avail, this.desc,
+      this.avail, this.desc, this.id,
       {Key? key})
       : super(key: key);
 
@@ -22,7 +24,6 @@ class RestaurantCard extends StatefulWidget {
 
 class _RestaurantCardState extends State<RestaurantCard> {
   int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -34,8 +35,13 @@ class _RestaurantCardState extends State<RestaurantCard> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => productdetailspage(widget.title,
-                      widget.desc, widget.rating, widget.avail, widget.image)));
+                  builder: (context) => productdetailspage(
+                      widget.title,
+                      widget.desc,
+                      widget.rating,
+                      widget.avail,
+                      widget.image,
+                      widget.id == Loggedin.resid ? true : false)));
         },
         child: Card(
           shape: RoundedRectangleBorder(
