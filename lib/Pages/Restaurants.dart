@@ -385,7 +385,7 @@ class SideDrawer extends StatelessWidget {
                                     rating,
                                     avail,
                                     image,
-                                    id,
+                                    true,
                                   )));
                     }
                   }
